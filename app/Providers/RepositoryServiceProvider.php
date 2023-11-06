@@ -9,11 +9,14 @@ use App\Contracts\ArtistContract;
 use App\Repositories\ArtistRepository;
 use App\Contracts\DesignContract;
 use App\Repositories\DesignRepository;
+use App\Contracts\CategoryContract;
+use App\Repositories\CategoryRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     protected $repositories = [
         AdminContract::class      =>      AdminRepository::class,
+        CategoryContract::class     =>      CategoryRepository::class,
         DesignContract::class     =>      DesignRepository::class,
         ArtistContract::class     =>      ArtistRepository::class,
         

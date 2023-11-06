@@ -29,9 +29,14 @@ class RedirectIfAuthenticated
                     return redirect('/artist/dashboard');
                 }
                 break;
+            case 'web':
+                if (Auth::guard($guard)->check()) {
+                    return redirect('/');
+                }
+                break;
             default:
                 if (Auth::guard($guard)->check()) {
-                    return redirect('/profile');
+                    return redirect('/');
                 }
                 break;
         }

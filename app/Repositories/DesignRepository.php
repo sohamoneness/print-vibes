@@ -100,12 +100,15 @@ class DesignRepository extends BaseRepository implements DesignContract
         $design->description = $collection['description'];
         $design->tags = $collection['tags'];
         // /$design->status = $collection['status'];
-
-        $profile_image = $collection['image'];
-        $imageName = time().".".$profile_image->getClientOriginalName();
-        $profile_image->move("designs/",$imageName);
-        $uploadedImage = $imageName;
-        $design->image = $uploadedImage;
+        
+        if(isset($collection['image'])){
+            $profile_image = $collection['image'];
+            $imageName = time().".".$profile_image->getClientOriginalName();
+            $profile_image->move("designs/",$imageName);
+            $uploadedImage = $imageName;
+            $design->image = $uploadedImage;
+        }
+       
 
         $design->save();
 
@@ -142,7 +145,12 @@ class DesignRepository extends BaseRepository implements DesignContract
      */
     public function detailsDesign($id){
         $designs = Design::where('id',$id)->get();
-        
         return $designs;
     }
+    
+    public function AllDesignList(){
+        $designs = Design::latest('id')->paginate(20);
+        return $designs;
+    }
+
 }

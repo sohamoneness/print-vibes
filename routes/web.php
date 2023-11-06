@@ -23,6 +23,20 @@ require 'artist.php';
 require 'vendor.php';
 require 'api.php';
 
+// Website Route
+Route::get('registration', 'Website\LoginController@showRegisterForm')->name('register');
+Route::post('registration/post', 'Website\LoginController@SubmitRegister')->name('register.post');
+Route::get('login', 'Website\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Website\LoginController@login')->name('login.post');
+Route::get('logout', 'Website\LoginController@logout')->name('logout');
+
+Route::group(['middleware' => ['auth:web']], function () {
+    Route::get('', function () {
+        return view('website.dashboard.index');
+    })->name('dashboard');
+    
+});
+
 // Route::group(['middleware' => ['auth','verified', 'userStatus']], function () {
 // 	Route::get('profile', 'Site\ProfileController@index')->name('user.profile');
 //     Route::post('profile', 'Site\ProfileController@profileUpdate')->name('user.updateprofile');
@@ -86,4 +100,3 @@ require 'api.php';
 
 // Route::post('/pay-per-click-submit', 'Site\ShowController@payPerClickSubmit')->name('site.show.payPerClickSubmit');
 // Route::post('/store-package-information', 'Site\PackageController@storePackageInformation')->name('site.package.storepackageinfo');
-

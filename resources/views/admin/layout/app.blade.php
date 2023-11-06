@@ -1,165 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Portal</title>
+    <title>Print Vibe</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    
+    <link rel="icon" type="image/x-icon type=" href="{{ asset('artist/images/favicon.png') }}" >
+    <link rel="stylesheet" href="{{ asset('backend/styles/styles.css') }}" />
+    <link rel="stylesheet" href="{{ asset('backend/styles/responsive.css') }}" />
+    <link rel="stylesheet" href="{{ asset('backend/styles/bootstrap.min.css') }}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link rel="stylesheet" href="{{ asset('backend-assets/plugins/fontawesome-free/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend-assets/css/adminlte.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend-assets/css/style.css') }}">
+    @yield('styles')
+    @stack('styles')
 
-    @yield('style')
 </head>
 
-<body class="hold-transition sidebar-mini">
-    <div class="wrapper">
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ url('/') }}" class="nav-link" target="_blank">Website</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route('admin.dashboard') }}" class="nav-link">Dashboard</a>
-                </li>
-            </ul>
+<body class="app sidebar-mini rtl">
+  <div class="overlay-sidebar"></div>
+    <main class="dashboard-container">
 
-            <ul class="navbar-nav ml-auto">
-         
-            <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                <i class="fas fa-expand-arrows-alt"></i>
-                </a>
+      <!-- Sidebar start -->
+      <div class="sidebar">
+        <div class="logo">
+          <a href="{{ route('admin.dashboard') }}">
+            <img src="{{ asset('backend/images/logo.png')}}" alt="" />
+          </a>
+        </div>
+        <div class="sidebar-list">
+          <ul class="list-unstyled p-0 m-0">
+            <li>
+              <a href="{{ route('admin.dashboard') }}" class="{{ request()->is('admin/dashboard*') ? 'active' : '' }}">
+                <img
+                  src="{{ asset('backend/images/clipboard.png')}}"
+                  class="list-img list-img-dark"
+                  alt=""
+                />
+                <img
+                  src="{{ asset('backend/images/clipboard-white.png')}}"
+                  class="list-img list-img-light"
+                  alt=""
+                />
+                <span>Dashboard</span>
+              </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                <i class="fas fa-th-large"></i>
-                </a>
+            <li>
+              <a href="{{ route('admin.category.index') }}" class="{{ request()->is('admin/category*') ? 'active' : '' }}">
+                <img
+                  src="{{ asset('backend/images/category.png')}}"
+                  class="list-img list-img-dark"
+                  alt=""
+                />
+                <img
+                  src="{{ asset('backend/images/category.png')}}"
+                  class="list-img list-img-light"
+                  alt=""
+                />
+                <span>Categories</span>
+              </a>
             </li>
-            </ul>
-        </nav>
+            <li>
+              <a href="{{ route('admin.design.index') }}" class="{{ request()->is('admin/design*') ? 'active' : '' }}">
+                <img
+                  src="{{ asset('backend/images/customer-management.png')}}"
+                  class="list-img list-img-dark"
+                  alt=""
+                />
+                <img
+                  src="{{ asset('backend/images/customer-management-light.png')}}"
+                  class="list-img list-img-light"
+                  alt=""
+                />
+                <span>Designs</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ route('admin.design.index') }}" class="{{ request()->is('admin/design*') ? 'active' : '' }}">
+                <img
+                  src="{{ asset('backend/images/customer-management.png')}}"
+                  class="list-img list-img-dark"
+                  alt=""
+                />
+                <img
+                  src="{{ asset('backend/images/customer-management-light.png')}}"
+                  class="list-img list-img-light"
+                  alt=""
+                />
+                <span>Design Categories</span>
+              </a>
+            </li>
+           
+            {{-- <li>
+              <a href="{{ route('artist.orders') }}" class="">
+                <img
+                  src="{{ asset('backend/images/customer-management.png')}}"
+                  class="list-img list-img-dark"
+                  alt=""
+                />
+                <img
+                  src="{{ asset('backend/images/customer-management-light.png')}}"
+                  class="list-img list-img-light"
+                  alt=""
+                />
+                <span>Order List</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ route('artist.transactions') }}" class="">
+                <img
+                  src="{{ asset('backend/images/customer-management.png')}}"
+                  class="list-img list-img-dark"
+                  alt=""
+                />
+                <img
+                  src="{{ asset('backend/images/customer-management-light.png')}}"
+                  class="list-img list-img-light"
+                  alt=""
+                />
+                <span>Transaction List</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ route('artist.followers') }}" class="">
+                <img
+                  src="{{ asset('backend/images/customer-management.png')}}"
+                  class="list-img list-img-dark"
+                  alt=""
+                />
+                <img
+                  src="{{ asset('backend/images/customer-management-light.png')}}"
+                  class="list-img list-img-light"
+                  alt=""
+                />
+                <span>Follower List</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ route('artist.notifications') }}" class="">
+                <img
+                  src="{{ asset('backend/images/customer-management.png')}}"
+                  class="list-img list-img-dark"
+                  alt=""
+                />
+                <img
+                  src="{{ asset('backend/images/customer-management-light.png')}}"
+                  class="list-img list-img-light"
+                  alt=""
+                />
+                <span>Notification List</span>
+              </a>
+            </li> --}}
+          </ul>
+        </div>
+      </div>
+      <!-- Sidebar End -->
 
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="{{ url('/') }}" class="brand-link text-center" target="_blank">
-                <img src="{{ asset('backend-assets/images/logo-text.svg') }}" alt="AdminLTE Logo" class="elevation-3" style="height: 45px;opacity: .8">
-                {{-- <span class="brand-text font-weight-light">Admin</span> --}}
-            </a>
-
-            <div class="sidebar">
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="{{ Auth::guard('manager')->user()->profile_photo? asset(Auth::guard('manager')->user()->profile_photo): asset('backend-assets/images/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-                </div>
-                <div class="info">
-                    <a href="#" class="d-block">{{Auth::guard('manager')->user()->first_name?Auth::guard('manager')->user()->first_name:"MBS Portal"}}</a>
-                </div>
-            </div>
-
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <li class="nav-item">
-                        <a href="{{ route('admin.dashboard') }}" class="nav-link {{ (request()->is('admin/dashboard')) ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                  <li class="nav-item">
-                        {{-- <a href="{{ route('manger.event.list') }}" class="nav-link {{ (request()->is('mbs/event*')) ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-list-alt"></i>
-                            <p>Event Management</p>
-                        </a> --}}
-                    </li>
-                      {{-- 
-                    <li class="nav-item">
-                        <a href="{{ route('admin.product.list.all') }}" class="nav-link {{ (request()->is('admin/product*')) ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-shopping-cart"></i>
-                            <p>Product</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.case-study.list.all') }}" class="nav-link {{ (request()->is('admin/case-study*')) ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-list-alt"></i>
-                            <p>Case studies</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.service.list.all') }}" class="nav-link {{ (request()->is('admin/service*')) ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-briefcase"></i>
-                            <p>Service</p>
-                        </a>
-                    </li> --}}
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)" onclick="event.preventDefault();document.getElementById('logout-form').submit()">
-                            <i class="nav-icon fas fa-sign-out-alt"></i>
-                            Logout
-                        </a>
-                    </li>
+      <div class="dashboard-right">
+        <div class="dashboard-header">
+          <div class="dash-header-left">
+            <img src="{{ asset('backend/images/bars-icon.png')}}" alt="" />
+          </div>
+          <div class="dash-header-right">
+            <ul class="list-unstyled p-0 m-0">
+              <li class="noti header-item">
+                <a href="{{ route('artist.notifications') }}"><img src="{{ asset('backend/images/bell-icon.png')}}" alt="" /></a>
+              </li>
+             
+              <li class="profile">
+                <a href="javascript:void"
+                  ><img src="{{ asset('backend/images/profile.png')}}" alt=""
+                /></a>
+                <ul class="list-unstyled p-0 m-0 dash-header-sub-menu">
+                  <li><a href="">Change Password</a></li>
+                  <li><a href="{{ route('admin.logout') }}">log out</a></li>
                 </ul>
-            </nav>
-            </div>
-        </aside>
-
-        <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                    <div class="col-sm-6">
-                        {{-- <h1 class="m-0">@yield('page-title')</h1> --}}
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active">@yield('page-title')</li>
-                        </ol>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-            @yield('section')
-
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <aside class="control-sidebar control-sidebar-dark">
-            <div class="p-3">
-                <h5>Title</h5>
-                <p>Sidebar content</p>
-            </div>
-        </aside>
+        @yield('content')
 
-        {{-- <footer class="main-footer">
-            <div class="float-right d-none d-sm-inline">
-                &copy; {{ $settings[3]->content }} All rights reserved
-            </div>
-            <strong>{{ date('Y') }} - <a href="{{ url('/') }}" target="_blank">{{ $settings[3]->content }}</a></strong>
-        </footer> --}}
-    </div>
+        @yield('scripts')
+        @stack('scripts')
+      </div>
+    </main>
+    
+    @yield('models')
+    @stack('models')
 
-    <form action="{{ route('admin.logout') }}" id="logout-form" method="post" class="d-none">@csrf</form>
 
-    <script src="{{ asset('backend-assets/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('backend-assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('backend-assets/js/adminlte.min.js') }}"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('backend-assets/js/custom.js') }}"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-
-    <script>
-        @if(Session::get('success'))
-            toastFire('success', '{{Session::get("success")}}');
-        @endif
-
-        @if(Session::get('failure'))
-            toastFire('error', '{{Session::get("failure")}}');
-        @endif
-    </script>
-
-    @yield('script')
 </body>
 </html>
