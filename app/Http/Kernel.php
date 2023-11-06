@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'hasInvitation' => \App\Http\Middleware\HasInvitation::class,
         'userStatus' => \App\Http\Middleware\UserStatus::class,
         'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class,
+        'admin' => \App\Http\Middleware\RedirectIfNotManager::class,
     ];
 
     /**

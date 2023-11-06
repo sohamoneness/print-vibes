@@ -2,63 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/css/main.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/css/font-awesome/4.7.0/css/font-awesome.min.css') }}"/>
-    <title>Login - {{ config('app.name') }}</title>
+    <title>Admin Log in</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="{{ asset('backend-assets/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend-assets/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend-assets/css/style.css') }}">
 </head>
-<body>
-<!--<section class="material-half-bg">-->
-<!--    <div class="cover"></div>-->
-<!--</section>-->
-<section class="login-content">
-    <div class="logo">
-        <!---<h1>{{ config('app.name') }}</h1>--->
-        <img src="{{ asset('backend/images/fdex_logo.png')}}">
-    </div>
+<body class="hold-transition login-page">
     <div class="login-box">
-        <form class="login-form" action="{{ route('admin.login.post') }}" method="POST" role="form">
-            @if(session()->has('verified'))
-                <div class="alert alert-success">
-                    Verified successfully
-                </div>
-            @endif
-            @if(session()->has('error'))
-                <div class="alert alert-danger">
-                    {{ session()->get('error') }}
-                </div>
-            @endif
-            @csrf
-            <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
-            <div class="form-group">
-                <label class="control-label" for="email">Email Address</label>
-                <input class="form-control" type="email" id="email" name="email" placeholder="Email address" autofocus value="{{ old('email') }}">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="password">Password</label>
-                <input class="form-control" type="password" id="password" name="password" placeholder="Password">
-            </div>
-            <div class="form-group d-flex align-items-center justify-content-between">
-                <div class="utility">
-                    <div class="animated-checkbox">
-                        <label>
-                            <input type="checkbox" name="remember"><span class="label-text">Remember me</span>
-                        </label>
+        <div class="login-logo">
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('backend-assets/images/logo.png') }}" alt="logo" style="height: 90px; width:40%;">
+                <h5>Admin Login</h5>
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+                <form method="POST" action="{{ route('admin.login.post') }}">@csrf
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control @error('email') is-invalid @enderror" placeholder="email" name="email" value="{{old('email')}}" autocomplete="email" maxlength="30" autofocus>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
-                </div>
-                <a class="" href="{{ route('admin.password.request') }}">Forgot Your Password?</a>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Password" name="password" value="" autocomplete="none" maxlength="30">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="row text-center">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group btn-container">
-                <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-sign-in fa-lg fa-fw"></i>SIGN IN</button>
-            </div>
-        </form>
+        </div>
     </div>
-</section>
-<script src="{{ asset('backend/js/jquery-3.2.1.min.js') }}"></script>
-<script src="{{ asset('backend/js/popper.min.js') }}"></script>
-<script src="{{ asset('backend/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('backend/js/main.js') }}"></script>
-<script src="{{ asset('backend/js/plugins/pace.min.js') }}"></script>
+
+    <script src="{{ asset('backend-assets/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('backend-assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('backend-assets/js/adminlte.min.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('backend-assets/js/custom.js') }}"></script>
+
+    <script>
+        @if(Session::get('success'))
+            toastFire('success', '{{Session::get("success")}}');
+        @endif
+
+        @if(Session::get('failure'))
+            toastFire('error', '{{Session::get("failure")}}');
+        @endif
+    </script>
 </body>
 </html>
+
+
+
+
+
+

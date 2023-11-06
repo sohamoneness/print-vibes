@@ -10,7 +10,7 @@ use App\Notifications\AdminResetPasswordNotification;
 class Admin extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
-
+    // protected $guard = 'admin';
     /**
      * The attributes that are mass assignable.
      *
