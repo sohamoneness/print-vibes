@@ -15,6 +15,7 @@ class DesignController extends BaseController
     /**
      * @var DesignContract
      */
+    
     protected $designRepository;
 
 

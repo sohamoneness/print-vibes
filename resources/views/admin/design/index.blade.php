@@ -1,8 +1,6 @@
 @extends('admin.layout.app')
 @section('content')
 @include('admin.partials.flash') 
-
-
   <div class="dashboard-content">
     <div class="dashboard-content-inner">
       <h4>{{ $pageTitle }}</h4>

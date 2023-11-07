@@ -13,9 +13,10 @@ use Auth;
 class CategoryController extends BaseController
 {
     /**
-     * @var CategoryContract
+     * @var CategoryContract 
      */
     protected $categoryRepository;
+    
 
 
     /**

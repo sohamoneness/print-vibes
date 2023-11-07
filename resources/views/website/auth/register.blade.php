@@ -11,7 +11,6 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-pink btn-block">Sign Up as artist</button>
                 </div>
-
                 <div class="or_text">
                     <span>or</span>
                 </div>

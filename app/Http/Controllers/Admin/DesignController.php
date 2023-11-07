@@ -22,8 +22,7 @@ class DesignController extends BaseController
      * DesignController constructor.
      * @param DesignContract $designRepository
      */
-    public function __construct(DesignContract $designRepository)
-    {
+    public function __construct(DesignContract $designRepository){
         $this->designRepository = $designRepository;
         
     }

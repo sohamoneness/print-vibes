@@ -25,7 +25,6 @@
             <img src="images/personal-details.png" alt="" /> {{ $subTitle }}
           </h5>
         </div>
-        
         <div class="add-customer-form add-lead-form">
           <form action="{{ route('admin.design.update') }}" method="POST" role="form" enctype="multipart/form-data">
              @csrf 

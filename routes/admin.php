@@ -11,7 +11,6 @@ Route::prefix('admin')->group(function(){
 	    Route::get('/', function () {
 	        return view('admin.dashboard.index');
 	    })->name('admin.dashboard');
-
 		Route::prefix('design')->group(function(){
 			Route::get('', 'Admin\DesignController@index')->name('admin.design.index');
 			Route::get('/create', 'Admin\DesignController@create')->name('admin.design.create');

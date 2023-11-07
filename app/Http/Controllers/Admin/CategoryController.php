@@ -25,7 +25,6 @@ class CategoryController extends BaseController
     public function __construct(CategoryContract $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
-        
     }
 
     /**

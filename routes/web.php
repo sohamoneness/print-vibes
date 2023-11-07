@@ -22,7 +22,6 @@ require 'admin.php';
 require 'artist.php';
 require 'vendor.php';
 require 'api.php';
-
 // Website Route
 Route::get('registration', 'Website\LoginController@showRegisterForm')->name('register');
 Route::post('registration/post', 'Website\LoginController@SubmitRegister')->name('register.post');
