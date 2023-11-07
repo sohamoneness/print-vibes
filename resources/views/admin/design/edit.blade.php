@@ -38,7 +38,7 @@
                 @enderror
               </div>
               <div class="col-12 col-lg-12 col-md-12">
-                <label for="">Design: </label>
+                <label for="">Image: </label>
                 @if ($targetDesign->image != null)
                     <figure class="mt-2" style="width: 80px; height: auto;">
                         <img src="{{ asset('designs/'.$targetDesign->image) }}" id="blogImage" class="img-fluid" alt="img">

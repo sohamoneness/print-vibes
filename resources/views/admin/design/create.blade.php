@@ -37,7 +37,7 @@
                 @enderror
               </div>
               <div class="col-12 col-lg-12 col-md-12">
-                <label for="">Design: </label>
+                <label for="">Image: </label>
                 <input type="file" name="image" placeholder="Title" class="form-control" />
                 @error('image')
                     <p class="small text-danger">{{ $message }}</p>

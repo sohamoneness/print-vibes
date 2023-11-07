@@ -29,10 +29,11 @@ Route::get('login', 'Website\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Website\LoginController@login')->name('login.post');
 Route::get('logout', 'Website\LoginController@logout')->name('logout');
 
+Route::get('', function () {
+    return view('website.dashboard.index');
+})->name('dashboard');
+
 Route::group(['middleware' => ['auth:web']], function () {
-    Route::get('', function () {
-        return view('website.dashboard.index');
-    })->name('dashboard');
     
 });
 

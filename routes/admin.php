@@ -29,7 +29,15 @@ Route::prefix('admin')->group(function(){
 			Route::post('/update', 'Admin\CategoryController@update')->name('admin.category.update');
 			Route::post('/updateStatus', 'Admin\CategoryController@updateStatus')->name('admin.category.updateStatus');
 			Route::get('/{id}/delete', 'Admin\CategoryController@delete')->name('admin.category.delete');
-			
+		});
+		Route::prefix('product')->group(function(){
+			Route::get('', 'Admin\ProductController@index')->name('admin.product.index');
+			Route::get('/create', 'Admin\ProductController@create')->name('admin.product.create');
+			Route::post('/store', 'Admin\ProductController@store')->name('admin.product.store');
+			Route::get('/{id}/edit', 'Admin\ProductController@edit')->name('admin.product.edit');
+			Route::post('/update', 'Admin\ProductController@update')->name('admin.product.update');
+			Route::post('/updateStatus', 'Admin\ProductController@updateStatus')->name('admin.product.updateStatus');
+			Route::get('/{id}/delete', 'Admin\ProductController@delete')->name('admin.product.delete');
 		});
 	});
 

@@ -1,5 +1,8 @@
 @extends('website.layout.app')
 @section('content')
+@php
+    $FeaturedProduct = App\Models\Product::latest('id')->where('deleted_at', 1)->limit(12)->get();
+@endphp
   <section class="banner__area">
     <div class="container">
       <div class="row">
@@ -164,273 +167,34 @@
       </div>
 
       <div class="row mt-3">
-
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured1.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
+        @foreach ($FeaturedProduct as $item)
+          <div class="col-6 col-lg-2 col-md-6 mb-4">
+            <div class="featured-content">
+              <a href="">
+                <div class="featured-img">
+                  <img src="{{asset('products/'.$item->image)}}" alt="" class="img-fluid" />
+                </div>
+                <div class="featured-info">
+                  <div class="name">
+                    <h5 class="mb-0">
+                      {{$item->name}}
+                    </h5>
+                    <!-- <span>by John Doe</span> -->
+                    <div class="price">
+                      @php
+                          $originalPrice =$item->price;
+                          $discountAmount =$originalPrice-$item->offer_price;
+                          $discountPercentage = ($discountAmount / $originalPrice) * 100;
+                      @endphp   
+                      <p class="mb-0">₹{{number_format($item->offer_price, 2, '.', '')}}</p>
+                      <p class="discounted"><del>₹{{number_format($item->price, 2, '.', '')}}</del> ({{number_format($discountPercentage, 2, '.', '')}}%off)</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </div>
           </div>
-        </div>
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured2.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured3.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured4.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured5.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured6.png')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured7.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured8.png')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured5.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured6.png')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured7.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-6 col-lg-2 col-md-6 mb-4">
-          <div class="featured-content">
-            <a href="">
-              <div class="featured-img">
-                <img src="{{asset('website/images/featured8.png')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="featured-info">
-                <div class="name">
-                  <h5 class="mb-0">
-                    But I like you, and that is not fake. Framed Art Print
-                  </h5>
-                  <!-- <span>by John Doe</span> -->
-
-                  <div class="price">
-                    <p class="mb-0">$105.00</p>
-                    <p class="discounted"><del>$131.72</del> (20%off)</p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-        
-
+        @endforeach
       </div>
     </div>
   </section>

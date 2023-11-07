@@ -264,23 +264,7 @@
         <div class="container-fluid">
           <div class="menu">
             <ul class="list-unstyled p-0 m-0">
-              <li>
-                <a href="">clothing</a>
-                <div class="sub-menu">
-                  <ul class="list-unstyled p-0 m-0">
-                    <li><a href="">all clothing</a></li>
-                    <li><a href="">dresses</a></li>
-                    <li><a href="">hats</a></li>
-                    <li><a href="">hoodies & sweatshirts</a></li>
-                    <li><a href="">leggins</a></li>
-                    <li><a href="">shirts</a></li>
-                    <li><a href="">socks</a></li>
-                    <li><a href="">t-shirts</a></li>
-                    <li><a href="">tank tops</a></li>
-                  </ul>
-                </div>
-              </li>
-              <li><a href="">stickers</a>
+              {{-- <li><a href="">phone cases</a>
                 <div class="sub-menu">
                   <ul class="list-unstyled p-0 m-0">
                     <li><a href="">all stickers</a></li>
@@ -288,24 +272,18 @@
                     
                   </ul>
                 </div>
-              </li>
-              <li><a href="">phone cases</a>
-                <div class="sub-menu">
-                  <ul class="list-unstyled p-0 m-0">
-                    <li><a href="">all stickers</a></li>
-                    <li><a href="">magnets</a></li>
-                    
-                  </ul>
-                </div>
-              </li>
-              <li><a href="">wall art</a></li>
-              <li><a href="">home & living</a></li>
+              </li> --}}
+              @foreach ($Externalcategory as $item)
+              <li><a href="">{{$item->name}}</a></li>
+              @endforeach
+              
+              {{-- <li><a href="">home & living</a></li>
               <li><a href="">kids & babies</a></li>
               <li><a href="">pets</a></li>
               <li><a href="">accessories</a></li>
               <li><a href="">stationery & office</a></li>
               <li><a href="">gifts</a></li>
-              <li><a href="">explore & designs</a></li>
+              <li><a href="">explore & designs</a></li> --}}
             </ul>
           </div>
         </div>
