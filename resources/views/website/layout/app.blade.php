@@ -274,7 +274,7 @@
                 </div>
               </li> --}}
               @foreach ($Externalcategory as $item)
-              <li><a href="">{{$item->name}}</a></li>
+              <li><a href="{{route('category_wise_list', $item->slug)}}">{{$item->name}}</a></li>
               @endforeach
               
               {{-- <li><a href="">home & living</a></li>

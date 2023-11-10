@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $ExistCategories = Schema::hasTable('categories');
         if ($ExistCategories) {
-            $ExternalCategory = Category::orderBy('name', 'asc')->where('status', 1)->where('deleted_at', 1)->get();
+            $ExternalCategory = Category::orderBy('name', 'asc')->where('status', 1)->where('deleted_at', 1)->limit(10)->get();
         }
         view()->share('Externalcategory', $ExternalCategory);
     }

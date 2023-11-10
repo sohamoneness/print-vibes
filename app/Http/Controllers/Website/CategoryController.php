@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Contracts\CategoryContract;
@@ -33,11 +33,11 @@ class CategoryController extends BaseController
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 
-    public function index(Request $request)
-    {
-        $categories = $this->categoryRepository->AllCategoryList();
-        $this->setPageTitle('All Categories', 'List of all categories');
-        return view('admin.category.index', compact('categories'));
+    public function CategoryWiseList($slug){
+        $category = $this->categoryRepository->SlugWiseCategory($slug);
+        $AllCategoryList = $this->categoryRepository->ALLCategoryByNameID();
+        $products = $this->categoryRepository->CategoryWiseProduct($category->id);
+        return view('website.product.list', compact('products', 'category', 'AllCategoryList', 'slug'));
     }
     
     /**

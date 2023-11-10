@@ -37,6 +37,7 @@
                 <thead>
                   <tr>
                     <th>Sr No</th>
+                    <th>Image</th>
                     <th>Name</th>
                     <td>Status</td>
                     <th>Action</th>
@@ -47,6 +48,10 @@
                   @foreach($categories as $key => $item)
                   <tr>
                     <td> {{ $categories->firstItem() + $loop->index }}</td>
+                    <td>@if($item->image!='')
+                      <img style="width: 150px;height: 100px;" src="{{asset($item->image)}}">
+                      @endif
+                    </td>
                     <td>{{$item->name}}</td>
                     <td>
                       <div class="toggle-button-cover margin-auto">

@@ -56,9 +56,10 @@ class CategoryController extends BaseController
     {
         $this->validate($request, [
             'name'      =>  'required|max:191',
-            'meta_title'      =>  'required',
-            'meta_keyword'      =>  'required',
-            'meta_description'      =>  'required',
+            'image'     =>  'required|mimes:jpg,jpeg,png|max:2000',
+            // 'meta_title'      =>  'required',
+            // 'meta_keyword'      =>  'required',
+            // 'meta_description'      =>  'required',
         ]);
 
         $params = $request->except('_token');
@@ -90,13 +91,12 @@ class CategoryController extends BaseController
     public function update(Request $request)
     {
         $this->validate($request, [
-            'title'      =>  'required|max:191',
-            'description'     =>  'required|max:1000',
+            'name'      =>  'required|max:191',
         ]);
 
         $params = $request->except('_token');
 
-        $design = $this->categoryRepository->updateDesign($params);
+        $design = $this->categoryRepository->updateCategory($params);
 
         if (!$design) {
             return $this->responseRedirectBack('Error occurred while updating Category.', 'error', true, true);

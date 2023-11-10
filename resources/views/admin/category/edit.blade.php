@@ -38,6 +38,18 @@
                     <p class="small text-danger">{{ $message }}</p>
                 @enderror
               </div>
+              <div class="col-12 col-lg-12 col-md-12">
+                <label for="">Image: </label>
+                @if ($targetDesign->image != null)
+                    <figure class="mt-2" style="width: 80px; height: auto;">
+                        <img src="{{ asset($targetDesign->image) }}" id="blogImage" class="img-fluid" alt="img">
+                    </figure>
+                @endif
+                <input type="file" name="image" placeholder="Title" class="form-control" />
+                @error('image')
+                    <p class="small text-danger">{{ $message }}</p>
+                @enderror
+              </div>
               <div class="col-12">
                 <label for=""> Meta Title </label>
                 <textarea name="meta_title" id="" cols="30" rows="2" class="form-control">{{ old('meta_title', $targetDesign->meta_title) }}</textarea>

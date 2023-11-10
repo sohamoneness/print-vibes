@@ -36,12 +36,19 @@
                     <p class="small text-danger">{{ $message }}</p>
                 @enderror
               </div>
+              <div class="col-12 col-lg-12 col-md-12">
+                <label for="">Image: </label>
+                <input type="file" name="image" placeholder="Title" class="form-control" />
+                @error('image')
+                    <p class="small text-danger">{{ $message }}</p>
+                @enderror
+              </div>
               <div class="col-12">
                 <label for=""> Meta Title </label>
                 <textarea name="meta_title" id="" cols="30" rows="2" class="form-control">{{old('meta_title')}}</textarea>
                 @error('meta_title')
-                <p class="small text-danger">{{ $message }}</p>
-            @enderror
+                    <p class="small text-danger">{{ $message }}</p>
+                @enderror
               </div>
               <div class="col-12">
                 <label for=""> Meta Keyword </label>

@@ -87,6 +87,12 @@ class ProductRepository extends BaseRepository implements ProductContract
             $design->price = $collection['price'];
             $design->offer_price = $collection['offer_price'];
             $design->status = '1';
+            // slug generate
+            $slug = \Str::slug($collection['name'], '-');
+            $slugExistCount = Product::where('slug', $slug)->where('deleted_at', 1)->count();
+            if ($slugExistCount > 0) $slug = $slug.'-'.($slugExistCount+1);
+            $design->slug = $slug;
+
             $profile_image = $collection['image'];
             $imageName = time().".".$profile_image->getClientOriginalName();
             $profile_image->move("products/",$imageName);
@@ -130,6 +136,11 @@ class ProductRepository extends BaseRepository implements ProductContract
         $design->offer_price = $collection['offer_price'];
         $design->status = '1';
 
+        $slug = \Str::slug($collection['name'], '-');
+        $slugExistCount = Product::where('slug', $slug)->where('id', '!=', $design->id)->where('deleted_at', 1)->count();
+        if ($slugExistCount > 0) $slug = $slug.'-'.($slugExistCount+1);
+        $design->slug = $slug;
+
         if(isset($collection['image'])){
             $profile_image = $collection['image'];
             $imageName = time().".".$profile_image->getClientOriginalName();
@@ -165,11 +176,14 @@ class ProductRepository extends BaseRepository implements ProductContract
 
         return $design;
     }
-
-    
     public function AllProductList(){
         $designs = Product::latest('id')->where('deleted_at', 1)->paginate(20);
         return $designs;
     }
+    public function SlugWiseProduct($slug){
+        $Product = Product::where('deleted_at', 1)->where('slug', $slug)->first();
+        return $Product;
+    }
+
 
 }

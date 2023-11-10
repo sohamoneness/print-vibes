@@ -29,7 +29,6 @@ class ProductController extends BaseController
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->designRepository = $designRepository;
-        
     }
 
     /**

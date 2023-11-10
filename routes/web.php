@@ -32,6 +32,9 @@ Route::get('logout', 'Website\LoginController@logout')->name('logout');
 Route::get('', function () {
     return view('website.dashboard.index');
 })->name('dashboard');
+Route::get('category/{slug}', 'Website\CategoryController@CategoryWiseList')->name('category_wise_list');
+Route::get('{category}/{slug}', 'Website\ProductController@SingleProduct')->name('single_product');
+
 
 Route::group(['middleware' => ['auth:web']], function () {
     

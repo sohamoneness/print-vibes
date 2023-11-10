@@ -2,6 +2,7 @@
 @section('content')
 @php
     $FeaturedProduct = App\Models\Product::latest('id')->where('deleted_at', 1)->limit(12)->get();
+    $ProductRangeCategory = App\Models\Category::orderBy('id', 'asc')->where('status', 1)->where('deleted_at', 1)->limit(8)->get();
 @endphp
   <section class="banner__area">
     <div class="container">
@@ -32,107 +33,21 @@
         </div>
       </div>
       <div class="row mt-4">
-        <div class="col-6 col-lg-3 col-md-6 mb-4">
-          <div class="pro-content">
-            <a href="">
-              <div class="pro-img">
-                <img src="{{asset('website/images/pro-img1.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="pro-info">
-                <span>shop clothing</span>
-              </div>
-            </a>
+        @foreach ($ProductRangeCategory as $item)
+          <div class="col-6 col-lg-3 col-md-6 mb-4">
+            <div class="pro-content">
+              <a href="">
+                <div class="pro-img">
+                  <img src="{{asset($item->image?$item->image:'website/images/default.jpg')}}" alt="" class="img-fluid" />
+                </div>
+                <div class="pro-info">
+                  <span>shop {{$item->name}}</span>
+                </div>
+              </a>
+            </div>
           </div>
-        </div>
-        <div class="col-6 col-lg-3 col-md-6 mb-4">
-          <div class="pro-content">
-            <a href="">
-              <div class="pro-img">
-                <img src="{{asset('website/images/pro-img2.png')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="pro-info">
-                <span>shop deals</span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-6 col-lg-3 col-md-6 mb-4">
-          <div class="pro-content">
-            <a href="">
-              <div class="pro-img">
-                <img src="{{asset('website/images/pro-img3.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="pro-info">
-                <span>shop t-shirt</span>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-6 col-lg-3 col-md-6 mb-4">
-          <div class="pro-content">
-            <a href="">
-              <div class="pro-img">
-                <img src="{{asset('website/images/pro-img4.png')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="pro-info">
-                <span>Shop pets</span>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-6 col-lg-3 col-md-6 mb-4">
-          <div class="pro-content">
-            <a href="">
-              <div class="pro-img">
-                <img src="{{asset('website/images/pro-img5.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="pro-info">
-                <span>shop pillows</span>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-6 col-lg-3 col-md-6 mb-4">
-          <div class="pro-content">
-            <a href="">
-              <div class="pro-img">
-                <img src="{{asset('website/images/pro-img6.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="pro-info">
-                <span>shop wall art</span>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-6 col-lg-3 col-md-6 mb-4">
-          <div class="pro-content">
-            <a href="">
-              <div class="pro-img">
-                <img src="{{asset('website/images/p1.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="pro-info">
-                <span>shop wall art</span>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-6 col-lg-3 col-md-6 mb-4">
-          <div class="pro-content">
-            <a href="">
-              <div class="pro-img">
-                <img src="{{asset('website/images/p2.jpg')}}" alt="" class="img-fluid" />
-              </div>
-              <div class="pro-info">
-                <span>shop wall art</span>
-              </div>
-            </a>
-          </div>
-        </div>
+        @endforeach
+        
       </div>
     </div>
   </section>
@@ -182,12 +97,10 @@
                     <!-- <span>by John Doe</span> -->
                     <div class="price">
                       @php
-                          $originalPrice =$item->price;
-                          $discountAmount =$originalPrice-$item->offer_price;
-                          $discountPercentage = ($discountAmount / $originalPrice) * 100;
+                          $discountPercentage = DiscountPercentage($item->price, $item->offer_price);
                       @endphp   
                       <p class="mb-0">₹{{number_format($item->offer_price, 2, '.', '')}}</p>
-                      <p class="discounted"><del>₹{{number_format($item->price, 2, '.', '')}}</del> ({{number_format($discountPercentage, 2, '.', '')}}%off)</p>
+                      <p class="discounted"><del>₹{{number_format($item->price, 2, '.', '')}}</del> ({{number_format($discountPercentage)}}%off)</p>
                     </div>
                   </div>
                 </div>

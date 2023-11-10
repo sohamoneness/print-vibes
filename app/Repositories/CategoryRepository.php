@@ -2,10 +2,12 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Traits\UploadAble;
 use Illuminate\Http\UploadedFile;
 use App\Contracts\CategoryContract;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 
@@ -69,6 +71,18 @@ class CategoryRepository extends BaseRepository implements CategoryContract
             $Category->meta_keyword = $collection['meta_keyword'];
             $Category->meta_description = $collection['meta_description'];
             $Category->status = '1';
+             // slug generate
+             $slug = \Str::slug($collection['name'], '-');
+             $slugExistCount = Category::where('slug', $slug)->count();
+             if ($slugExistCount > 0) $slug = $slug.'-'.($slugExistCount+1);
+             $Category->slug = $slug;
+
+            $upload_path = "Category/";
+            $profile_image = $collection['image'];
+            $imageName = time().".".$profile_image->getClientOriginalName();
+            $profile_image->move($upload_path, $imageName);
+            $uploadedImage = $imageName;
+            $Category->image = $upload_path.$uploadedImage;
             $Category->save();
 
             return $Category;
@@ -87,20 +101,25 @@ class CategoryRepository extends BaseRepository implements CategoryContract
         $Category = $this->findOneOrFail($params['id']); 
         $collection = collect($params)->except('_token'); 
 
-        $Category->title = $collection['title'];
-        $Category->description = $collection['description'];
-        $Category->tags = $collection['tags'];
-        // /$Category->status = $collection['status'];
+        $Category->name = $collection['name'];
+        $Category->meta_title = $collection['meta_title'];
+        $Category->meta_keyword = $collection['meta_keyword'];
+        $Category->meta_description = $collection['meta_description'];
+
+        $slug = \Str::slug($collection['name'], '-');
+        $slugExistCount = Category::where('slug', $slug)->where('id', '!=', $Category->id)->count();
+        if ($slugExistCount > 0) $slug = $slug.'-'.($slugExistCount+1);
+
+        $Category->slug = $slug;
         
         if(isset($collection['image'])){
+            $upload_path = "Category/";
             $profile_image = $collection['image'];
             $imageName = time().".".$profile_image->getClientOriginalName();
-            $profile_image->move("Categorys/",$imageName);
+            $profile_image->move($upload_path, $imageName);
             $uploadedImage = $imageName;
-            $Category->image = $uploadedImage;
+            $Category->image = $upload_path.$uploadedImage;
         }
-       
-
         $Category->save();
 
         return $Category;
@@ -141,8 +160,35 @@ class CategoryRepository extends BaseRepository implements CategoryContract
     }
     
     public function AllCategoryList(){
-        $Categorys = Category::orderBy('name', 'ASC')->where('deleted_at', 1)->paginate(20);
+        $Categorys = Category::orderBy('name', 'ASC')->where('deleted_at', 1)->where('status', 1)->paginate(20);
         return $Categorys;
+    }
+    public function ALLCategoryByNameID(){
+        $Categorys = Category::select('name', 'id')->orderBy('name', 'ASC')->where('deleted_at', 1)->where('status', 1)->get();
+        return $Categorys;
+    }
+
+    public function SlugWiseCategory($slug){
+        $category = Category::where('slug',$slug)->first();
+        if ($category == null){
+            return false;
+        }else{
+            return $category;
+        }
+        
+    }
+    public function CategoryWiseProduct($catId){
+        $products = Product::with('DesignData')->where('status', 1)->where('deleted_at', 1)->paginate();
+     
+        $CatArrayId = [];
+        if(count($products)>0)
+        foreach ($products as $product){
+            $CategoryArray = explode(', ', $product['category_id']);
+            if(in_array($catId, $CategoryArray)){
+                $CatArrayId[] = $product;
+            }
+        }
+        return $CatArrayId;
     }
 
 }
